@@ -1,0 +1,29 @@
+\section{Methodology}
+\label{sec:methodology}
+
+This section provides details on the numerics, though not exhaustively. For full reproducibility,  \href{https://github.com/peter-janderks/floquet_colour_codes_numerics}{the source code} includes instructions for generating circuits, running simulations, and using Jupyter notebooks to produce all plots.
+
+We built circuits that implement the memory and stability experiments using Stim \cite{Gidney2021stimfaststabilizer}. 
+For convenience, we simulate the DCCCs on a torus, but we check the error rate of 1 logical $X$ operator and 1 logical $Z$ operator.
+For phenomenological, SD, and SI noise we simulate distances $4,8,12,$ and $16$.
+For EM noise we simulate distances $2,4,6,$ and $8$.
+MWPM decoding is performed using the PyMatching package \cite{higgott2025sparse} and belief matching via the 
+BeliefMatching package \cite{higgott2022fragile,higgott_beliefmatching_2023}. 
+We collect shots using Sinter.
+When decoding each circuit with MWPM, we collect $10^6$ shots or as many shots required until $100$ logical errors occur, whichever comes first.
+With belief matching, we collect $10^4$ shots  or as many shots required until $100$ logical errors occur, whichever comes first.
+
+The highlighted regions in \Cref{fig:volume_verification,fig:X1Y1Z1_X1Z1_teraquop_linefits} are computed with Sinter and show hypothesis probabilities within $1000 \times$ of 
+the max likelihood hypothesis \cite{AG47_2024}.
+The error in $\tilde{n}_E, \tilde{n}_M, \tilde{h}_E, \tilde{h}_M$ shown in \Cref{fig:X1Y1Z1_X1Z1_comparison_cln,fig:X1Y1Z1_X1Z1_comparison,fig:X1Z1_X3Z3_comparison} is determined by fitting two lines with a maximum additional squared error set to 1 to the data using Sinter.
+The error is then given by the value at which these two lines intersect the horizontal line $y=10^{-12}$. 
+More info on the error in the line fits is given in \Ccite[Appendix A]{gidney2023pair}.
+We denote the maximum/minimum errors as $\tilde{n}_{E,\text{max/min}}, \, \tilde{n}_{M,\text{max/min}}, \, \tilde{h}_{E,\text{max/min}}, $ and $\tilde{h}_{M,\text{max/min}}$.
+The error $\tilde{h}_{\text{max/min}}$ is given by $\frac{\tilde{h}_{E,\text{max/min}} + \tilde{h}_{M,\text{max/min}}}{2}$.
+We denote the relative error of a variable $x$ as 
+\begin{equation}\Delta x =  \frac{x_\text{high} - x_\text{best}}{x_\text{best}}.
+\end{equation}
+The maximum and mininimum error in the teraquop volume is given as
+\begin{equation}
+\epsilon_{\text{max/min}} = \sqrt{ \Delta \tilde{n}_{E,\text{max/min}}^2 + \Delta\tilde{n}_{M,\text{max/min}}^2 + \Delta \tilde{h}_{\text{max/min}}^2}.
+\end{equation}

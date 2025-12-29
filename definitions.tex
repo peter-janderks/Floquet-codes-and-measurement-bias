@@ -1,0 +1,393 @@
+% THEOREMS
+% Reset the counter for all of these every section.
+% Only have one counter total - let it be the 'theorem' counter.
+
+
+% Standard
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{plottwist}[theorem]{Plot-twist}
+\newtheorem{keyidea}[theorem]{Key idea}
+\newtheorem{keypoint}[theorem]{Key point}
+\newtheorem{spoiler}[theorem]{Spoiler alert}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{openquestion}[theorem]{Open question}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{difference}[theorem]{Difference}
+
+% If using Cref, it needs to know how to pluralise these non-standard theorem names.
+\crefname{keypoint}{key point}{key points}
+\Crefname{keypoint}{Key point}{Key points}
+\crefname{difference}{difference}{differences}
+\Crefname{difference}{Difference}{Differences}
+
+% Custom
+\declaretheoremstyle[qed={$\blacksquare$}]{exampleStyle}
+\declaretheorem[style=exampleStyle, sibling=theorem, name=Example]{example}
+\declaretheorem[style=exampleStyle, sibling=theorem, name=Example, numbered=no]{example*}
+% Define a new command for subsubsubsection
+\makeatletter
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
+\newcommand{\subsubsubsection}[1]{%
+    \refstepcounter{subsubsubsection}%
+    \vskip 2ex \@plus 1ex \@minus .2ex% Reduced vertical space before
+    {\sffamily\normalsize% Sans-serif font family, normal size, no bold
+        \thesubsubsubsection \quad #1\par}% Put heading on its own line
+    \nobreak% Prevent page break after heading
+    % \vskip 1ex \@plus .2ex% Reduced space after
+}
+\makeatother
+
+% REFERENCES
+% Define a `clever cite' command analogous to cleveref's functionality for references
+\newcommand{\ccite}[2][]{%
+    \IfSubStr{#2}{,}{refs.~}{ref.~}%
+    \ifthenelse{\equal{#1}{}}{\cite{#2}}{\cite[#1]{#2}}}
+\newcommand{\Ccite}[2][]{%
+    \IfSubStr{#2}{,}{Refs.~}{Ref.~}%
+    \ifthenelse{\equal{#1}{}}{\cite{#2}}{\cite[#1]{#2}}}
+% Little QEC zoo icon with URL.
+% This first one is useful as an optional argument to \cite.
+
+% CALLIGRAPHY
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+
+\newcommand{\DDD}{\mathcal{D}}
+\newcommand{\GGG}{\mathcal{G}}
+\newcommand{\HHH}{\mathcal{H}}
+\newcommand{\LLL}{\mathcal{L}}
+\newcommand{\MMM}{\mathcal{M}}
+\newcommand{\NNN}{\mathcal{N}}
+\newcommand{\PPP}{\mathcal{P}}
+\newcommand{\SSS}{\mathcal{S}}
+\newcommand{\TTT}{\mathcal{T}}
+
+\newcommand{\one}{\mathds{1}}
+
+% SYMBOLS
+\newcommand{\halfuparrow}{\scalebox{0.5}{\ensuremath{\uparrow}}}
+\newcommand{\halfrightarrow}{\scalebox{0.5}{\ensuremath{\rightarrow}}}
+
+
+
+% COMMENTS
+% Comment visibility toggle
+\newif\ifShowComments
+\ShowCommentstrue
+% \ShowCommentsfalse
+
+% Add some TeX nonsense to avoid weird whitespace if comments are switched off.
+% UPDATE: PyCharm doesn't seem to like this, and as a result won't autocomplete any commands below this line.
+% So commenting it out for now.
+%\makeatletter
+%\newcommand{\comment}[3]{\@bsphack\ifShowComments\textcolor{#1}{[#2: #3]}\else\unskip\fi\@esphack}
+\newcommand{\comment}[3]{\textcolor{#1}{[#2: #3]}}
+%\makeatother
+\newcommand{\teague}[1]{\comment{blue}{Teague}{#1}}
+\newcommand{\je}[1]{\comment{cyan}{Jens}{#1}}
+\newcommand{\pj}[1]{\comment{Green}{PJD}{#1}}
+\newcommand{\bjb}[1]{\comment{magenta}{BJB}{#1}}
+\newcommand{\ojh}[1]{\comment{orange}{OJH}{#1}}
+
+% MATHS
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\after}{\circ}
+\newcommand{\floor}[1]{\lfloor#1\rfloor}
+\newcommand{\ceil}[1]{\lceil#1\rceil}
+\newcommand{\nonNegInts}{\ZZ_{\geq 0}}
+\newcommand{\positiveInts}{\ZZ_{>0}}
+\newcommand{\groupPres}[1]{\left\langle #1 \right\rangle}
+
+% QUANTUM
+\newcommand{\allIdentitiesExcept}[1]{I \otimes \ldots \otimes I \otimes #1 \otimes I \otimes \ldots \otimes I}
+\newcommand{\isg}[1]{\SSS_{#1}}
+\newcommand{\lpg}[1]{\LLL_{#1}}
+\newcommand{\lpglong}[1]{\NNN(\isg{#1}) / \isg{#1}}
+\newcommand{\dsg}[1]{\DDD_{#1}}
+\newcommand{\qcode}[1]{\llbracket#1\rrbracket}
+\newcommand{\ccode}[1]{[#1]}
+% MISF = measurement in stabilizer formalism
+\newcommand{\misfCase}[1]{\hyperlink{misf_case_#1}{\textit{Case #1}}}
+\newcommand{\modPhases}[1]{#1^\star}
+\newcommand{\addPhases}[1]{\langle i \rangle #1}
+\newcommand{\PauliX}{\mathbf{X}}
+\newcommand{\PauliY}{\mathbf{Y}}
+\newcommand{\PauliZ}{\mathbf{Z}}
+\newcommand{\PauliP}{\mathbf{P}}
+
+% Dynamically condensed colour codes
+%\newcommand{\dcccOp}[3]{#1_{\colourful{#2}, \colourful{#3}}}
+\newcommand{\dcccOp}[3]{#1_{\colourful{#2}, #3}}
+\newcommand{\colourful}[1]{%
+    \IfEqCase{#1}{%
+            {r}{\textcolor{red}{r}}%
+            {g}{\textcolor{Green}{g}}%
+            {b}{\textcolor{blue}{b}}%
+            {c}{\textcolor{cyan}{c}}%
+            {m}{\textcolor{magenta}{m}}%
+            {y}{\textcolor{Dandelion}{y}}% Yellow!90!Black? Goldenrod? Dandelion?
+            {X}{\textcolor{red}{X}}% TODO: Match with ZX red
+            {Y}{\textcolor{blue}{Y}}% TODO: Match with ZX blue
+            {Z}{\textcolor{Green}{Z}}% TODO: Match with ZX green
+    % Else do nothing to the argument.
+    }[#1]}
+% Next four lines just import a little hexagon symbol.
+\DeclareFontEncoding{LS1}{}{}
+\DeclareFontSubstitution{LS1}{stix}{m}{n}
+\DeclareSymbolFont{symbols4}{LS1}{stixbb}{m}{it}
+\DeclareMathSymbol{\filledHexagon}{\mathord}{symbols4}{"DE}
+% Boson table - so much code for one little table!
+% First, example usage:
+%\bosonTable{
+%    condensed=rx, % Which cell will be coloured white. Also determines which four confined cells will be grey.
+%    rowLabel=electric, % Whether the row containing the condensed cell is coloured violet (electric) or orange (magnetic).
+%    columnLabel=magnetic, % Whether the column containing the condensed cell is coloured violet (electric) or orange (magnetic).
+%    rx={\filledHexagon \diagup}, % Content for the `rx` cell.
+%    gx={\filledHexagon}, % Content for the `rx` cell.
+%    bx={\filledHexagon}, % Content for the `bx` cell.
+%    gy={\filledHexagon}, % Content for the `gy` cell.
+%    by={\filledHexagon}, % Content for the `by` cell.
+%    gz={\filledHexagon}, % Content for the `gz` cell.
+%    bz={\filledHexagon}, % Content for the `bz` cell.
+%}
+% Default colours to use
+\newcommand{\confinedColourDefault}{gray!50}
+\newcommand{\deconfinedColourDefault}{gray!20}
+\newcommand{\electricColourDefault}{violet!20}
+\newcommand{\magneticColourDefault}{orange!20}
+% Default condensed cell - doesn't matter which, just needs to be a valid cell
+\newcommand{\condensedRow}{1}
+\newcommand{\condensedColumn}{1}
+\newcommand{\confinedRows}{2,3}
+\newcommand{\confinedColumns}{2,3}
+% Default to colouring all cells white
+\newcommand{\condensedRowColour}{white}
+\newcommand{\condensedColumnColour}{white}
+\newcommand{\confinedColour}{white}
+% Commands for putting stuff inside each cell
+\newcommand{\bosonTableRx}{}
+\newcommand{\bosonTableGx}{}
+\newcommand{\bosonTableBx}{}
+\newcommand{\bosonTableRy}{}
+\newcommand{\bosonTableGy}{}
+\newcommand{\bosonTableBy}{}
+\newcommand{\bosonTableRz}{}
+\newcommand{\bosonTableGz}{}
+\newcommand{\bosonTableBz}{}
+% Turn @ symbol into a normal letter for a bit
+\makeatletter
+% Define a bunch of keys
+\define@key{bosonTable}{condensed}[]{%
+    \IfEqCase{#1}{%
+        {}{%
+            \renewcommand{\condensedRowColour}{white}%
+            \renewcommand{\condensedColumnColour}{white}%
+            \renewcommand{\confinedColour}{white}%
+        }{rx}{%
+            \renewcommand{\condensedRow}{1}%
+            \renewcommand{\condensedColumn}{1}%
+            \renewcommand{\confinedRows}{2, 3}%
+            \renewcommand{\confinedColumns}{2, 3}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }{gx}{%
+            \renewcommand{\condensedRow}{1}%
+            \renewcommand{\condensedColumn}{2}%
+            \renewcommand{\confinedRows}{2, 3}%
+            \renewcommand{\confinedColumns}{1, 3}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }{bx}{%
+            \renewcommand{\condensedRow}{1}%
+            \renewcommand{\condensedColumn}{3}%
+            \renewcommand{\confinedRows}{2, 3}%
+            \renewcommand{\confinedColumns}{1, 2}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }{ry}{%
+            \renewcommand{\condensedRow}{2}%
+            \renewcommand{\condensedColumn}{1}%
+            \renewcommand{\confinedRows}{1, 3}%
+            \renewcommand{\confinedColumns}{2, 3}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }{gy}{%
+            \renewcommand{\condensedRow}{2}%
+            \renewcommand{\condensedColumn}{2}%
+            \renewcommand{\confinedRows}{1, 3}%
+            \renewcommand{\confinedColumns}{1, 3}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }{by}{%
+            \renewcommand{\condensedRow}{2}%
+            \renewcommand{\condensedColumn}{3}%
+            \renewcommand{\confinedRows}{1, 3}%
+            \renewcommand{\confinedColumns}{1, 2}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }{rz}{%
+            \renewcommand{\condensedRow}{3}%
+            \renewcommand{\condensedColumn}{1}%
+            \renewcommand{\confinedRows}{1, 2}%
+            \renewcommand{\confinedColumns}{2, 3}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }{gz}{%
+            \renewcommand{\condensedRow}{3}%
+            \renewcommand{\condensedColumn}{2}%
+            \renewcommand{\confinedRows}{1, 2}%
+            \renewcommand{\confinedColumns}{1, 3}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }{bz}{%
+            \renewcommand{\condensedRow}{3}%
+            \renewcommand{\condensedColumn}{3}%
+            \renewcommand{\confinedRows}{1, 2}%
+            \renewcommand{\confinedColumns}{1, 2}%
+            \renewcommand{\confinedColour}{\confinedColourDefault}%
+            \renewcommand{\condensedColumnColour}{\deconfinedColourDefault}%
+            \renewcommand{\condensedRowColour}{\deconfinedColourDefault}%
+        }%
+    }[\PackageError%
+        {bosonTableError}%
+        {Unknown boson label: `#1'}%
+        {Accepted values: `', `rx', `gx', `bx', `ry', `gy', `by', `rz', `gz', `bz'}%
+    ]%
+}
+\define@key{bosonTable}{rowLabel}[]{%
+    \IfEqCase{#1}{%
+        {}{\renewcommand{\condensedRowColour}{white}}%
+        {electric}{\renewcommand{\condensedRowColour}{\electricColourDefault}}%
+        {e}{\renewcommand{\condensedRowColour}{\electricColourDefault}}%
+        {magnetic}{\renewcommand{\condensedRowColour}{\magneticColourDefault}}%
+        {m}{\renewcommand{\condensedRowColour}{\magneticColourDefault}}%
+    }[\PackageError%
+        {bosonTableError}%
+        {Unknown charge label: `#1'}%
+        {Accepted values: `', `electric', `e', `magnetic', `m'}%
+    ]%
+}
+\define@key{bosonTable}{columnLabel}[]{%
+    \IfEqCase{#1}{%
+        {}{\renewcommand{\condensedColumnColour}{white}}%
+        {electric}{\renewcommand{\condensedColumnColour}{\electricColourDefault}}%
+        {e}{\renewcommand{\condensedColumnColour}{\electricColourDefault}}%
+        {magnetic}{\renewcommand{\condensedColumnColour}{\magneticColourDefault}}%
+        {m}{\renewcommand{\condensedColumnColour}{\magneticColourDefault}}%
+    }[\PackageError%
+        {bosonTableError}%
+        {Unknown charge label: `#1'}%
+        {Accepted values: `', `electric', `e', `magnetic', `m'}%
+    ]%
+}
+\define@key{bosonTable}{rx}[]{\renewcommand{\bosonTableRx}{#1}}
+\define@key{bosonTable}{gx}[]{\renewcommand{\bosonTableGx}{#1}}
+\define@key{bosonTable}{bx}[]{\renewcommand{\bosonTableBx}{#1}}
+\define@key{bosonTable}{ry}[]{\renewcommand{\bosonTableRy}{#1}}
+\define@key{bosonTable}{gy}[]{\renewcommand{\bosonTableGy}{#1}}
+\define@key{bosonTable}{by}[]{\renewcommand{\bosonTableBy}{#1}}
+\define@key{bosonTable}{rz}[]{\renewcommand{\bosonTableRz}{#1}}
+\define@key{bosonTable}{gz}[]{\renewcommand{\bosonTableGz}{#1}}
+\define@key{bosonTable}{bz}[]{\renewcommand{\bosonTableBz}{#1}}
+% Set default keys
+\setkeys{bosonTable}{%
+    condensed={},
+    rowLabel={},
+    columnLabel={},
+    rx={},
+    gx={},
+    bx={},
+    ry={},
+    gy={},
+    by={},
+    rz={},
+    gz={},
+    bz={},
+}
+% Define the actual command
+\newcommand{\bosonTable}[1]{%
+    \begingroup%
+        \setkeys{bosonTable}{#1}%
+        % This \ExpandArgs command is important - thank you StackExchange!
+        % https://tex.stackexchange.com/questions/698799/understanding-expansion-in-tblr-environment
+        % NOTE: This solution requires TeX Live 2023!
+        \ExpandArgs{ne}\begin{tblr}{
+            % Format the table
+            colspec = {ccc},
+            cell{\condensedRow}{\confinedColumns} = {\condensedRowColour},
+            cell{\confinedRows}{\condensedColumn} = {\condensedColumnColour},
+            cell{\confinedRows}{\confinedColumns} = {\confinedColour},
+            vlines = {1-3}{solid},
+            vline{1, 4} = {0pt},
+            hlines = {1-3}{solid},
+            hline{1, 4} = {0pt},
+        }
+            % Put the actual contents in there
+%            \bosonTableRx & \bosonTableGx & \bosonTableBx \\
+%            \bosonTableRy & \bosonTableGy & \bosonTableBy \\
+%            \bosonTableRz & \bosonTableGz & \bosonTableBz
+            % Or should I force us into math mode???
+%            \ensuremath{
+%                \bosonTableRx & \bosonTableGx & \bosonTableBx \\
+%                \bosonTableRy & \bosonTableGy & \bosonTableBy \\
+%                \bosonTableRz & \bosonTableGz & \bosonTableBz
+%            }
+            \ensuremath{\bosonTableRx} & \ensuremath{\bosonTableGx} & \ensuremath{\bosonTableBx} \\
+            \ensuremath{\bosonTableRy} & \ensuremath{\bosonTableGy} & \ensuremath{\bosonTableBy} \\
+            \ensuremath{\bosonTableRz} & \ensuremath{\bosonTableGz} & \ensuremath{\bosonTableBz}
+        \end{tblr}
+    \endgroup%
+}
+% Turn @ back into a special letter
+\makeatother
+%\newcommand{\bosonTableLabelled}[]{%
+%    \begin{tblr}{
+%        colspec = {rccc},
+%        row{1} = {fg=gray, font=\small},
+%        column{1} = {fg=gray, font=\small},
+%        cell{2}{3, 4} = {orange!20},
+%        cell{3, 4}{2} = {purple!20},
+%        cell{3, 4}{3, 4} = {gray!20},
+%        vlines = {1}{0pt},
+%        vlines = {2-4}{solid},
+%        vline{1, 2, 5} = {0pt},
+%        hlines = {1}{0pt},
+%        hlines = {2-4}{solid},
+%        hline{1, 2, 5} = {0pt},
+%    }
+%        & c & c' & c'' \\
+%        P & \filledHexagon \diagup & \filledHexagon & \filledHexagon \\
+%        P' & & \filledHexagon & \filledHexagon \\
+%        P'' & & \filledHexagon & \filledHexagon \\
+%    \end{tblr}}
+
+% LAZINESS
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\qqquad}{\quad\qquad}
+\newcommand{\qqqquad}{\quad\qqquad}
+\newcommand{\qqqqquad}{\quad\qqqquad}
+\newcommand{\qqqqqquad}{\quad\qqqqquad}
+
+
+\newcommand\blfootnote[1]{%
+\begingroup
+\renewcommand\thefootnote{}\footnote{#1}%
+\addtocounter{footnote}{-1}%
+\endgroup
+}

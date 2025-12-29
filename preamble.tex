@@ -1,0 +1,83 @@
+% Default preamble
+\pdfoutput=1
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{parskip}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true, citecolor=gray]{hyperref}
+% xcolor isn't a default, but if using with options like `dvipsnames',
+% this clashes with tikz' own import of xcolor.
+% So must import it here first.
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage{tikz}
+\usepackage{lipsum}
+
+% Custom stuff
+% For inverse search with PDF viewer
+\usepackage{pdfsync}
+% Various AMS packages
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+% For making 'example' environment non-italics.
+\usepackage{thmtools}
+% For blackboard font style '1'.
+\usepackage{dsfont}
+% For braket stuff, duh.
+\usepackage{braket}
+% The \coloneqq symbols, amongst others
+\usepackage{mathtools}
+% For using diagrams as mathematical objects, mostly.
+\usepackage[export]{adjustbox}
+% For multi-row (>3) group presentations.
+\usepackage{scalerel}
+% For including object type in references.
+\usepackage[nameinlink]{cleveref}
+% cleveref by default calls a subsection a `section' - override this.
+\crefname{subsection}{subsection}{subsections}
+% For defining custom 'clevercite' commands in definitions.tex.
+\usepackage{xstring}
+% For defining commands with optional arguments.
+\usepackage{ifthen}
+% For St Mary Road symbols, including double square bracket for quantum codes.
+\usepackage{stmaryrd}
+% For more complex subfigure stuff.
+%\usepackage{caption}
+\usepackage{subcaption}
+% For strikethrough text via \sout.
+% Adding option 'normalem' stops package from overwriting the \emph command.
+\usepackage[normalem]{ulem}
+% For more flexibility when drawing tables.
+\usepackage{tabularray}
+% For line breaks within table cells.
+\usepackage{makecell}
+% For calling commands with key-val arguments
+\usepackage{xkeyval}
+% For playing card suit symbols (hearts, clubs, etc)
+\usepackage{wasysym}
+
+% Packages already installed in initial Overleaf import
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{svg}
+\usepackage{appendix}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{placeins}
+
+% Allow figures placed at the bottom of documents to take up more space.
+% The default is .3 (so figures must fit in the bottom 30% of the page)
+\renewcommand\bottomfraction{.8}
+% If wanting even more space, can also change topfraction (max, default .7) and textfraction (min, default .3).
+\renewcommand\topfraction{.8}
+\renewcommand\textfraction{0}
+
+
+% Set the depth of the table of contents
+\setcounter{tocdepth}{2}
+
+\input{definitions}

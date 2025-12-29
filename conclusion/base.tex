@@ -1,0 +1,16 @@
+ \section{Discussion and outlook}
+\label{sec:summary_and_outlook}
+
+DCCCs can be used to implement a surface code block, the basic unit of a lattice surgery quantum computer.
+In this work, we have optimized the overhead of a surface code block by tailoring the measurement schedule of DCCCs to biased phenomenological noise and circuit-level noise models.
+This was done by repeating measurements and measuring in different bases.
+
+The metric we have introduced and optimized here is the teraquop volume, the spacetime overhead required to reach spacelike and timelike logical error rate $10^{-12}$.
+We have shown that the optimal measurement schedule depends on the noise model and the type of decoder used. 
+We hope to see experimental demonstrations of DCCCs with tailored measurement schedules.
+Additionally, we hope that the teraquop volume metric gains wider adoption, as we consider it a crucial measure of overhead in quantum error correction and a tool to make reasonable design choices when setting up specific schemes for quantum error correction.
+
+It would be interesting to see if tailoring measurement schedules can be combined with other techniques to further reduce the teraquop volume.
+Taking inspiration from \Ccite{berthusen2025adaptivesyndromeextraction}, one could envision an adaptive measurement schedule.
+Furthermore, for strongly biased noise we expect a gain from combining repeated measurements with Clifford conjugated DCCCs as in \Ccite{setiawan2024tailoring}.
+Time vortex defects~\cite{kishony2025increasingdistancetopologicalcodes} may further reduce teraquop volumes. It is also the hope that ideas such as those presented here will assist in taking steps for designing fault tolerant schemes for quantum computing beyond quantum memories.
