@@ -80,7 +80,8 @@ then at time $t+1$ we must choose a new set $\dcccOp{E}{\kappa_{t+1}}{P_{t+1}}$ 
 such that cell $(\kappa_{t+1}, P_{t+1})$ shares neither a row nor column with $(\kappa_t, P_t)$ in the boson table.
 Later, in \Cref{sec:gauge_dcccs}, we relax this restriction and investigate DCCCs with repeated measurements -- i.e. we allow $\dcccOp{E}{\kappa_{t+1}}{P_{t+1}} = \dcccOp{E}{\kappa_t}{P_t}$.
 But until then, the two DCCCs we will focus on are
-the \textit{$X^1Y^1Z^1$ honeycomb code} and the \textit{$X^1Z^1$ honeycomb code}.
+the \textit{$X^1Y^1Z^1$ honeycomb code} from \Ccite{hastings2021dynamically} and the \textit{$X^1Z^1$ honeycomb code} from 
+\Ccite{kesselring2022anyon}.
 These are defined by the measurement schedules
 \begin{equation}\label{eq:honeycomb_codes_measurement_schedules}
     \begin{aligned}
@@ -155,12 +156,13 @@ For reasons we discuss shortly (\Cref{subsec:E_and_M_components}), we will actua
 
 Before we can discuss how DCCCs are used to detect and correct errors, we need to meet the errors in question.
 
-\subsubsection{Phenomenological noise model}
+\subsubsection{Direct parity measurement noise model}
 In a quantum circuit that implements a DCCC -- one that repeatedly performs the defining sequence of measurements $\MMM = (\groupPres{\dcccOp{E}{\kappa_0}{P_0}}, \groupPres{\dcccOp{E}{\kappa_1}{P_1}}, \ldots)$ --
 in addition to the $n$ \textit{data qubits},
 we may require additional \textit{auxiliary qubits} in order to perform the measurements.
-In the \textit{phenomenological noise model},
-we assume that at every timestep $t$,
+In the \textit{direct parity measurement noise model},
+we assume that two-qubit parity measurements (such as $XX$, $YY$, $ZZ$) can be performed natively.
+We assume that at every timestep $t$,
 before a generating set for $\MMM_t$ is measured,
 any of the $n$ data qubits can be afflicted by a single-qubit Pauli error $X$, $Y$, or $Z$ with probability $p_X$, $p_Y$, or $p_Z$ respectively.
 We call these \textit{data qubit errors}.
@@ -170,7 +172,7 @@ We call this a \textit{measurement error}, or \textit{measurement noise}.
 A noise model is \textit{biased} unless all of these probabilities are equal.
 Tailoring DCCCs to be effective against biased noise models will be a key theme of this work.
 The two types of bias we will focus on are \textit{measurement bias} and \textit{$Z$ bias}.
-In a phenomenological noise model, the measurement bias is defined as
+In the direct parity measurement noise model, the measurement bias is defined as
 $\eta_m = p_m/(p_X + p_Y + p_Z)$,
 and the $Z$ bias is defined as
 $\eta_Z = 2p_Z/(p_X+p_Y)=p_Z/p_X$, assuming $p_X=p_Y$.
@@ -259,7 +261,7 @@ To generate
     \end{subfigure}
     \caption{
         Subfigures \textbf{(a)}, \textbf{(b)} and \textbf{(c)} show the $\ket{+}$ state, $X$ measurement and $CX$ gate respectively as ZX-diagrams.
-        Subfigures \textbf{(d)} and \textbf{(e)} show examples of errors in a circuit-level noise model,
+        Subfigures \textbf{(d)} and \textbf{(e)} show examples of errors in an auxiliary qubit circuit noise model,
         where two-qubit gates and a single-qubit measurement are used to measure $e_{\kappa, X}$.
         Specifically, \textbf{(d)} shows a $Y \otimes Z$ error occurring immediately after a $CX$ gate,
         while \textbf{(e)} shows a measurement error on an $X$ measurement.
@@ -299,10 +301,10 @@ To generate
     \endgroup
 \end{figure}
 
-\subsubsection{Circuit-level noise model}
+\subsubsection{Auxiliary qubit circuit noise model}
 
-A \textit{circuit-level noise model} is more fine-grained than a phenomenological noise model.
-In a circuit-level noise model,
+An \textit{auxiliary qubit circuit noise model} decomposes multi-qubit measurements into elementary gates using auxiliary qubits, in contrast to the direct parity measurement noise model which assumes native two-qubit parity measurements.
+In an auxiliary qubit circuit noise model,
 we ignore the distinction between data and auxiliary qubits.
 Instead, we just assume that after every gate $g$ on $q$ qubits, any weight-$q$ Pauli operator can occur on these qubits with some probability $p_g$.
 We continue to assume that measurement noise can occur.
@@ -311,10 +313,10 @@ We consider two different families of circuits, \emph{single-qubit measurement c
 In the first, the measurements of edge operators $\dcccOp{e}{\kappa}{P}$ are implemented via auxiliary qubits, two-qubit gates, and single-qubit Pauli measurements.
 In the second, the measurements of edge operators are implemented `natively' -- no auxiliary qubits are used.
 
-The single-qubit measurement circuits are simulated with two different circuit-level noise models: \textit{standard depolarizing} (SD) and \textit{superconducting-inspired} (SI).
+The single-qubit measurement circuits are simulated with two different auxiliary qubit circuit noise models: \textit{standard depolarizing} (SD) and \textit{superconducting-inspired} (SI).
 The SI model is taken from \Ccite{gidney2021fault}. 
 There is a slight difference between our SI model and \textit{SI1000} in \Ccite{gidney2021fault}, namely that in the SI1000 noise model it is assumed that the only two-qubit gate used is $CZ$, while the circuits here contain $CX$, $CY$, and $CZ$ gates.
-The two-qubit measurement circuits are simulated with a different circuit-level noise model referred to as \textit{entangling measurements} (EM) noise.
+The two-qubit measurement circuits are simulated with a different auxiliary qubit circuit noise model referred to as \textit{entangling measurements} (EM) noise.
 The EM noise model is exactly the EM3 model taken from \Ccite{gidney2022benchmarking}.
 The different gates, errors, and probabilities of each model are shown in \Cref{tab:noise_table}.
 
@@ -476,8 +478,8 @@ the minimum number of errors required to create a spacelike or timelike logical 
     \includegraphics[width=\linewidth]{figures/DCCCs/XYZ_logical_data_qubit_errors}
     \caption{
         On a subset of qubits, we show a spacelike (left) and timelike (right) logical error in the XYZ honeycomb code consisting only of data qubit errors.
-        \href{https://tinyurl.com/bdd7er9s}{The spacelike} and 
-        \href{https://tinyurl.com/ypwn6hca}{the timelike} logical errors in
+        \href{https://tinyurl.com/bdd7er9s}{Click here to view the spacelike} and 
+        \href{https://tinyurl.com/ypwn6hca}{here to view the timelike} logical errors in
         Crumble~\cite{crumble}, a
         prototype tool for Clifford circuit exploration.}
 \label{fig:XYZ_logical_data_qubit_errors}

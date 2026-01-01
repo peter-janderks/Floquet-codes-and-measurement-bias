@@ -1,7 +1,7 @@
 \section{Bias-tailoring I: choosing a schedule}\label{sec:choosing-a-schedule}
 
 In this section we discuss differences between the $X^1Z^1$ and $X^1Y^1Z^1$ codes and their impact on the teraquop volumes.
-We begin by considering the simpler case of phenomenological noise -- the simplicity here allows us to look closely at specific error mechanisms in order to better understand the two codes -- before we move to the more realistic but messier case of circuit-level noise.
+We begin by considering the simpler case of direct parity measurement noise -- the simplicity here allows us to look closely at specific error mechanisms in order to better understand the two codes -- before we move to the more realistic but messier case of auxiliary qubit circuit noise.
 
 \subsection{Differences}\label{subsec:differences}
 
@@ -60,10 +60,10 @@ Altogether one might think we should be able to define a rectangular code with $
 such that we save qubits overall while maintaining the same protection against spacelike logical errors.
 In the $X^1 Y^1 Z^1$ code this is not possible, because the noise being biased towards Pauli $Z$ errors doesn't increase or decrease the probability of either type of spacelike logical error occurring.
 
-\subsection{Phenomenological noise results}\label{subsec:unrepetaed-phenomenological-noise}
+\subsection{Direct parity measurement noise results}\label{subsec:unrepetaed-direct-parity-measurement-noise}
 
 Now we look at our simulation results.
-\Cref{fig:X1Y1Z1_X1Z1_comparison} shows $\tilde{n}_E, \tilde{n}_M, \tilde{h}_E, \tilde{h}_M$ and the teraquop volume of the $X^1Y^1Z^1$ and $X^1Z^1$ codes for unbiased, $Z$-biased, and measurement-biased phenomenological noise.
+\Cref{fig:X1Y1Z1_X1Z1_comparison} shows $\tilde{n}_E, \tilde{n}_M, \tilde{h}_E, \tilde{h}_M$ and the teraquop volume of the $X^1Y^1Z^1$ and $X^1Z^1$ codes for unbiased, $Z$-biased, and measurement-biased direct parity measurement noise.
 We highlight two key points, and examine their relationship to the differences from the last subsection.
 
 \begin{keypoint}\label{key:XYZ_XZ_best_and_worst}
@@ -99,7 +99,7 @@ Similarly, the better timelike distance in the $X^1 Y^1 Z^1$ code (\Cref{dif:XYZ
             \hline
             & \multicolumn{3}{c|}{$X^1 Y^1 Z^1$} & \multicolumn{3}{c|}{$X^1 Z^1$} \\
             \cline{2-7}
-            & \makecell{Phenom.\\ noise} & \makecell{Meas.\\ noise} & Z noise & \makecell{Phenom.\\ noise} & \makecell{Meas.\\ noise} & Z noise \\
+            & \makecell{Direct parity\\ meas.} & \makecell{Meas.\\ noise} & Z noise & \makecell{Direct parity\\ meas.} & \makecell{Meas.\\ noise} & Z noise \\
             \cline{2-7}
             \hline
             \hline
@@ -183,9 +183,9 @@ We show the four types of distances of the two codes under the three different n
 and additionally show the \textit{hyperedge likelihood} $p_h$ -- the likelihood of an error in that noise model corresponding to a hyperedge in the decoding graph.
 
 
-\subsection{Circuit-level noise results}\label{subsec:unrepeated-circuit-level-noise}
+\subsection{Auxiliary qubit circuit noise results}\label{subsec:unrepeated-auxiliary-qubit-circuit-noise}
 
-\Cref{fig:X1Y1Z1_X1Z1_comparison_cln} presents $\tilde{n}_E, \tilde{n}_M, \tilde{h}_E, \tilde{h}_M$, and the teraquop volume for the $X^1Y^1Z^1$ and $X^1Z^1$ codes under three circuit-level noise models.
+\Cref{fig:X1Y1Z1_X1Z1_comparison_cln} presents $\tilde{n}_E, \tilde{n}_M, \tilde{h}_E, \tilde{h}_M$, and the teraquop volume for the $X^1Y^1Z^1$ and $X^1Z^1$ codes under three auxiliary qubit circuit noise models.
 Logical operator distances are summarized in \Cref{tab:xyz_css_summary}.
 The results confirm the trends identified in \Cref{key:XYZ_XZ_best_and_worst}: the $X^1Z^1$ code performs best with MWPM, whereas the $X^1Y^1Z^1$ code is superior with belief matching.
 
@@ -194,4 +194,4 @@ For SI and SD noise decoded with belief matching, $\tilde{h}_E$ and $\tilde{h}_M
 Surprisingly, the timelike distance remains identical between the two codes, suggesting that distance alone is not always a reliable performance indicator.
 A similar case was made in \Ccite{gidney2023pair}.
 
-Despite simulating entangling measurement noise with a physical error rate ten times higher, the teraquop volumes remain of the same order of magnitude across all three circuit-level noise models.
+Despite simulating entangling measurement noise with a physical error rate ten times higher, the teraquop volumes remain of the same order of magnitude across all three auxiliary qubit circuit noise models.

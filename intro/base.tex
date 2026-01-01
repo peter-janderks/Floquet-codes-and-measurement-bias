@@ -11,7 +11,7 @@ It is an exciting time for lattice surgery computing, with several experimental 
 \cite{acharya2024quantum, caune2024demonstrating, wootton2022measurements, eickbusch2024demonstrating, ali2024reducing, krinner2022realizing, harper2025characterising}.
 
 
-In parallel with the development of these prototypes, the recent discovery of \textit{dynamic stabilizer codes} has led to new ways of implementing surface code blocks. This started with the introduction of the honeycomb code \cite{hastings2021dynamically}.
+In parallel with the development of these prototypes, the recent discovery of \textit{dynamic stabilizer codes} has led to new ways of implementing surface code blocks. This started with the introduction of the Hastings-Haah honeycomb code \cite{hastings2021dynamically}.
 Subsequently, a larger class of codes containing the honeycomb code was discovered, which we refer to as \textit{dynamically condensed colour codes} (DCCCs) \cite{kesselring2022anyon}.
 Despite having `colour code' in their name, DCCCs are topologically equivalent to the surface code, so can be used as surface code blocks
 \cite{davydova2022floquet, bombin2024unifying, kesselring2022anyon}. 
@@ -39,7 +39,7 @@ A logical error rate of $10^{-12}$ would be required for a lattice surgery quant
 
 \subsection{Previous numerical work}\label{subsec:previous-numerical-work}
 
-The footprint of what we'll refer to as the $X^1 Y^1 Z^1$ honeycomb code has been studied in \Ccite{gidney2022benchmarking, gidney2021fault, hilaire2024enhanced}.
+The footprint of what we'll refer to as the $X^1 Y^1 Z^1$ honeycomb code has been studied in \Ccite{gidney2022benchmarking, gidney2021fault, dessertaine2025, chan2025tailoring}.
 The footprints of hyperbolic and semi-hyperbolic $X^1 Y^1 Z^1$ honeycomb codes have been studied in \Ccite{higgott2024constructions,sutcliffe2025distributedquantumerrorcorrection}. 
 The memory threshold of what we'll refer to as the $X^1 Z^1$ honeycomb code has been studied in \Ccite{kesselring2022anyon, Hetnyi2024}. 
 The memory threshold of the $X^1 Z^1$ honeycomb code tailored to biased noise has been studied in \Ccite{setiawan2024tailoring}. 
@@ -52,9 +52,9 @@ All DCCCs are implemented by repeatedly measuring sets of $XX$, $YY$ or $ZZ$ ope
 Additionally, one can choose to repeat a particular set of weight-two measurements any number of times~\cite{OscarSubsystemGaugeFixing}.
 A glossary of the terms used in the figures within this section is provided in Table \ref{tab:glossary}.
 
-\subsubsection{Phenomenological noise results}\label{subsubsec:phenomenological-noise-results}
+\subsubsection{Direct parity measurement noise results}\label{subsubsec:direct-parity-measurement-noise-results}
 
-\Cref{fig:phenomenological_noise_volume_plot_beliefmatching,fig:phenomenological_noise_volume_plot_pymatching} show the performance of DCCCs for phenomenological noise models decoded using MWPM and belief matching.
+\Cref{fig:phenomenological_noise_volume_plot_beliefmatching,fig:phenomenological_noise_volume_plot_pymatching} show the performance of DCCCs for direct parity measurement noise models decoded using MWPM and belief matching.
 We have obtained volumes for 16 different noise models, which differ in measurement bias and $Z$ error bias.
 From the results presented in \Cref{fig:phenomenological_noise_volume_plot_beliefmatching,fig:phenomenological_noise_volume_plot_pymatching}, we can draw the following conclusions:
 
@@ -68,15 +68,15 @@ Repeating measurements can improve the teraquop volume under measure\-ment-biase
 
 
 
-\subsubsection{Circuit-level noise results}\label{subsubsec:circuit-level-noise-results}
+\subsubsection{Auxiliary qubit circuit noise results}\label{subsubsec:auxiliary-qubit-circuit-noise-results}
 
-Three circuit-level noise models are simulated: \emph{superconducting-inspired} (SI) noise, \emph{standard depolarizing} (SD) noise, and \emph{entangling
+Three auxiliary qubit circuit noise models are simulated: \emph{superconducting-inspired} (SI) noise, \emph{standard depolarizing} (SD) noise, and \emph{entangling
 measurement} (EM) noise.
 \Cref{fig:pymatching_circuit_level_noise_volume_plot,fig:beliefmatching_circuit_level_noise_volume_plot} show the performance of DCCCs when decoded with MWPM and belief matching, respectively. 
 We can draw the following conclusions:
 
 \begin{keypoint}
-For all three circuit-level noise models, when decoding with MWPM, it is better to only measure $XX$ and $ZZ$, while when decoding with belief matching, it is better to measure $XX$, $YY$, and $ZZ$.
+For all three auxiliary qubit circuit noise models, when decoding with MWPM, it is better to only measure $XX$ and $ZZ$, while when decoding with belief matching, it is better to measure $XX$, $YY$, and $ZZ$.
 \end{keypoint}
 
 \begin{keypoint}
@@ -116,13 +116,13 @@ The source code used to produce the results in this paper can be found at \\
             \makecell[lt]{Teraquop\\volume} & The amount of qubits times the number of measurement rounds at which the probability of any logical error occurring is $10^{-12}$.  \\
             MWPM & A decoder that uses the minimum-weight perfect-matching algorithm.\\
             \makecell[lt]{Belief\\matching} &  A decoder that uses belief propagation and the minimum-weight perfect-matching algorithm.\\
-            \makecell[lt]{Phenomenological\\noise} & A simple noise model in which Pauli errors can occur before measurement rounds with probabilities $p_X$, $p_Y$ and $p_Z$, and measurement errors can occur with probability $p_m$.\\
+            \makecell[lt]{Direct parity\\measurement noise} & A circuit noise model in which single-qubit Pauli errors can occur before measurement rounds with probabilities $p_X$, $p_Y$ and $p_Z$, and measurement errors can occur with probability $p_m$. Assumes native two-qubit parity measurements.\\
             \makecell[lt]{Measurement\\error bias} & $\frac{p_m}{p_X + p_Y + p_Z}$, assuming $p_X, p_Y, p_Z$ and $p_m$ are chosen such that the physical error rate is kept constant at $10^{-3}$.\\
             \makecell[lt]{$Z$ error\\bias} & $\frac{2p_Z}{p_X+p_Y}$, assuming $p_X, p_Y, p_Z$ and $p_m$ are chosen such that the physical error rate is kept constant at $10^{-3}$.\\
-            \makecell[lt]{Circuit-level\\noise} & A more accurate noise model in which a $q$-qubit Pauli error can occur with probability $p_g$ after each gate $g$ on $q$ qubits, and measurement errors can occur with probability $p_m$.\\
-            \makecell[lt]{Standard\\depolarizing noise} & A circuit-level noise model that assumes multi-qubit measurements are implemented by single-qubit measurements on auxiliary qubits, and all error probabilities are equal.\\
-            \makecell[lt]{Superconducting-\\inspired noise} & A circuit-level noise model that assumes multi-qubit measurements are implemented by single-qubit measurements on auxiliary qubits, and the error probabilities model those experienced by real superconducting hardware.\\
-            \makecell[lt]{Entangling\\measurement noise} & A circuit-level noise model that assumes multi-qubit measurements are implemented directly, and all error probabilities are equal.\\
+            \makecell[lt]{Auxiliary qubit\\circuit noise} & A circuit noise model in which a $q$-qubit Pauli error can occur with probability $p_g$ after each gate $g$ on $q$ qubits, and measurement errors can occur with probability $p_m$. Multi-qubit measurements are decomposed using auxiliary qubits.\\
+            \makecell[lt]{Standard\\depolarizing noise} & An auxiliary qubit circuit noise model that assumes multi-qubit measurements are implemented by single-qubit measurements on auxiliary qubits, and all error probabilities are equal.\\
+            \makecell[lt]{Superconducting-\\inspired noise} & An auxiliary qubit circuit noise model that assumes multi-qubit measurements are implemented by single-qubit measurements on auxiliary qubits, and the error probabilities model those experienced by real superconducting hardware.\\
+            \makecell[lt]{Entangling\\measurement noise} & An auxiliary qubit circuit noise model that assumes multi-qubit measurements are implemented directly, and all error probabilities are equal.\\
             \hline
         \end{tabularx}
     }
@@ -142,6 +142,8 @@ The source code used to produce the results in this paper can be found at \\
         Decoding is performed using MWPM.
         For all noise models investigated here, the $X^a Z^b$ code outperforms the $X^a Y^b Z^c$ code.
         Repeating measurements improves performance when the noise is biased strongly towards measurement errors only, and has negligible effect otherwise.
+        Codes are ordered first by type ($X^a Z^b$ code, then $X^a Y^b Z^c$ code), then by increasing schedule length ($a+b$ or $a+b+c$). 
+        Codes with equal schedule length are ordered by balance, with more uniformly distributed repetition parameters appearing first.
         For noise model details, definitions, and naming conventions see Table \ref{tab:glossary}.
      }
     \label{fig:phenomenological_noise_volume_plot_pymatching}
@@ -162,8 +164,10 @@ The source code used to produce the results in this paper can be found at \\
 \begin{figure}[p]
     \centering
     \includegraphics[width=0.9\columnwidth]{figures/introduction/volumes_cln_pymatching.pdf}
-    \caption{Teraquop volumes of $X^a Y^b Z^c$ and $X^a Z^b$ codes for three circuit-level noise models; standard depolarizing noise with $p=0.0005$, superconducting inspired noise with $p=0.00025$, and entangling measurement noise with $p=0.0025$. Decoding is performed using MWPM. In each case, the code with the best teraquop volume is from the $X^a Z^b$ family, though the difference 
-    is small.
+    \caption{Teraquop volumes of $X^a Y^b Z^c$ and $X^a Z^b$ codes for three auxiliary qubit circuit noise models; standard depolarizing noise with $p=0.0005$, superconducting inspired noise with $p=0.00025$, and entangling measurement noise with $p=0.0025$. Decoding is performed using MWPM. 
+    Codes are ordered first by type ($X^a Z^b$ code, then $X^a Y^b Z^c$ code), then by increasing schedule length ($a + b$ or $a+b+c$). 
+    Codes with equal schedule length are ordered by balance, with more uniformly distributed repetition parameters appearing first.
+    In each case, the code with the best teraquop volume is from the $X^a Z^b$ family, though the difference is small.
     Repeating measurements broadly has negligible effect, though does seem to improve the performance of the $X^1 Y^1 Z^1$ code in the superconducting inspired noise model, which features a moderate measurement bias.
     The error bars are explained in \Cref{sec:methodology}.}
     \label{fig:pymatching_circuit_level_noise_volume_plot}
@@ -172,10 +176,10 @@ The source code used to produce the results in this paper can be found at \\
 \begin{figure}[p]
     \centering
     \includegraphics[width=0.9\columnwidth]{figures/introduction/volumes_cln_beliefmatching.pdf}
-    \caption{Teraquop volumes of $X^a Y^b Z^c$ and $X^a Z^b$ codes for three circuit-level noise models; standard depolarizing noise with $p=0.001$, superconducting inspired noise with $p=0.0005$, and entangling measurement noise with $p=0.005$. Decoding is performed using belief matching.
-    In contrast to \Cref{fig:pymatching_circuit_level_noise_volume_plot}, now in each case the code with the best teraquop volume is from the $X^a Y^b Z^c$ family.
-    As before, repeating measurements broadly has negligible effect, though does improve the performance of the $X^1 Z^1$ code in the entangling measurements noise model.
-    The error bars are explained in \Cref{sec:methodology}.}
+  \caption{
+    Same plot as in \Cref{fig:pymatching_circuit_level_noise_volume_plot} but with decoding performed using belief matching and higher physical error rates;
+    standard depolarizing noise with $p=0.001$, superconducting inspired noise with $p=0.0005$, and entangling measurement noise with $p=0.005$. 
+    As before, repeating measurements broadly has negligible effect, though does improve the performance of the $X^1 Z^1$ code in the entangling measurements noise model.}
     \label{fig:beliefmatching_circuit_level_noise_volume_plot}
 \end{figure}
 

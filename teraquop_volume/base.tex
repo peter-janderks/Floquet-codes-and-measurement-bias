@@ -14,8 +14,15 @@ We call it the \emph{teraquop volume}.
 Here we deliberately do not specify what exactly a quantum error correcting protocol is and what it means for a set of circuits implementing one to form a family.
 For a given circuit, noise model and decoder, the \emph{overall logical error rate} is the probability of any logical error -- whether spacelike or timelike -- occurring after the decoder has been applied.
 In practice, an approximation of this value will be found numerically.
-If there is no $(n_j, T_j)$ such that the overall logical error rate is less than $10^{-12}$,
-then we say the teraquop volume is infinite.
+If there is no $(n_j, T_j)$ such that the overall logical error rate is less than $10^{-12}$, then we say the teraquop volume is infinite.
+For a given code family, noise model, and physical error rate, the teraquop volume typically corresponds to a unique point $(n_j, T_j)$ rather than a smooth curve of equivalent space-time trade-offs.
+That is, one cannot generally reduce the number of qubits and compensate by increasing the number of rounds (or vice versa) while maintaining the target logical error rate.
+
+The teraquop volume is the appropriate metric for evaluating quantum error correction performance in lattice surgery computations because it accounts for space-time tradeoffs.
+In surface code architectures, circuit depth can be reduced at the cost of increased qubit overhead, or vice versa \cite{lee2021even}.
+A volume-based metric captures this interchangeability, making it possible to compare codes with different spatial and temporal resource requirements on equal footing.
+If the teraquop footprint were used instead, codes with high qubit overhead but low circuit depth would be unfairly penalized, and vice versa.
+
 In the next subsection we explain how we determine the teraquop volume of a DCCC.
 \Cref{fig:teraquop_volume_summary} summarizes the concept of teraquop volume and the methodology used for its determination.
 
@@ -34,7 +41,8 @@ In the next subsection we explain how we determine the teraquop volume of a DCCC
   \includegraphics[width=0.9\linewidth]{figures/teraquop_volume/X1Y1Z1_X1Z1_teraquop_linefits}
     \caption{
         Plots showing line-fits to determine the minimal value of $n_E$, $n_M$  $h_E,$ and $h_M$ such that the probability of any logical error occuring is $10^{-12}$.
-        The value of the $x$-axis wherever a dotted line would first cross the line $y = 10^{-12}$ is the value used for the corresponding teraquop dimension.}
+        The value of the $x$-axis wherever a dotted line would first cross the line $y = 10^{-12}$ is the value used for the corresponding teraquop dimension.
+        The highlighted regions are computed with Sinter and show hypothesis probabilities within 1000× of the max likelihood hypothesis \cite{AG47_2024}.}
     \label{fig:X1Y1Z1_X1Z1_teraquop_linefits}
 \end{figure}
 
@@ -45,6 +53,7 @@ In the next subsection we explain how we determine the teraquop volume of a DCCC
     \caption{
         Plots showing the logical error rate of $E$ memory experiments with varying $n_M$ and $h$. Decoding is performed with MWPM.
         The plots confirm that the probability of a spacelike logical $E$ error occurring depends linearly on $n_M$ and $h$.
+        The highlighted regions are computed with Sinter and show hypothesis probabilities within 1000× of the max likelihood hypothesis \cite{AG47_2024}.
     }
     \label{fig:volume_verification}
 \end{figure}
@@ -68,7 +77,13 @@ Determining the teraquop volume requires finding the minimal value of $f(n_M n_E
 Although this suggests a large search space, the minimal values of $n_E$, $n_M$, and $h$ can be evaluated independently to obtain a good approximation.
 This is because the probability of each type of logical error occurring (spacelike $E$ or $M$, or timelike $E$ or $M$) depends exponentially on one of $n_E$, $n_M$, and $h$, and linearly on the other two.
 For example, the probability of a spacelike logical $E$ error occurring depends exponentially on $n_E$ and linearly on $n_M$ and $h$.
+When the minimum value of all three independently-determined dimensions are used together, each type of logical error remains well-suppressed because the exponential dependence dominates the linear scaling.
+The overall logical error rate approximates $10^{-12}$, though it may be somewhat below or above this threshold by a small constant factor.
+
 Plots verifying this linear dependence are shown in \Cref{fig:volume_verification}.
+It could be the case that for different codes the probablity of each type of logical error occuring depends exponentially on one parameter and polynomially on the other two, but we have not observed this in any of the DCCCs we have studied.
+If this were to occur, we expect that the approximation method we use would still give a reasonable estimate of the teraquop volume.
+To verify if our approximation method is accurate, one can simulate the overall logical error rate for the estimated minimal values of $n_E$, $n_M$, and $h$ and check if it is indeed below $10^{-12}$.
 
 To actually find these minimal values of $n_E$, $n_M$, and $h$, we perform memory and stability experiments~\cite{gidney2022stability}.
 A memory experiment means initialising a logical qubit in an eigenstate of a certain logical operator,

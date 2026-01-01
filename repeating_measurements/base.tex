@@ -10,8 +10,8 @@ When the measurements of these check operators are repeated, the subsequent meas
 Intuitively, by remaining in the same ISG while we repeat the commuting measurements, we can form much smaller detectors consisting of far fewer measurements, allowing us to protect against certain types of errors more effectively.
 For example, if we remain in an ISG with detectors that protect more effectively against $Z$ errors, then this can be effective for handling $Z$-biased noise models (as was done in \Ccite{OscarSubsystemGaugeFixing}).
 
-However, to the best of our knowledge, SIGF has previously only been applied to subsystem codes.
-Furthermore, it has not previously been studied how well it can handle a noise model biased towards \textit{measurement} errors.
+SIGF has been applied to subsystem codes \Ccite{OscarSubsystemGaugeFixing} and to the Floquet-Bacon-Shor codes \Ccite{SohaibAlam_2025}.
+However, it has not previously been studied how well it can handle a noise model biased towards \textit{measurement} errors.
 Intuitively we would expect SIGF to be advantageous in this setting, since each detector is formed from far fewer of the noisy measurements.
 In this work, we apply SIGF to DCCCs.
 Concretely, we simply repeat the edge operator measurements made at each timestep $t$ some number of times $r_t$.
@@ -19,7 +19,7 @@ We call the resulting new dynamical code a \textit{repeated DCCC} --
 or, if we want to be specific, an \emph{$\mathbf{r}$-repeated DCCC}, where $\mathbf{r} = (r_0, r_1, \ldots)$.
 
 In the next subsection we look analytically at how this intuition manifests itself in terms of detectors, logical errors and the decoding graph, and what we expect this to mean for the teraquop volumes.
-Then we present numerical results and see how well our expectations hold up -- again, first for the more tractable case of phenomenological noise, and then the more realistic circuit-level noise.
+Then we present numerical results and see how well our expectations hold up -- again, first for the more tractable case of direct parity measurement noise, and then the more realistic auxiliary qubit circuit noise.
 Furthermore, we explore how repeated DCCCs perform both for $Z$ error bias and measurement bias.
 
 \subsection{Detectors}\label{subsec:repeating_measurements_detectors}
@@ -114,9 +114,8 @@ For our two favourite DCCCs, we compute these averages exactly in \Cref{tab:repe
     Overall, it decreases a DCCC's average detector volume and average number of measurements per detector.
 \end{difference}
 
-Intuitively, smaller volumes and fewer measurements per detector are better,
-so the fact these averages decrease might suggest a general performance improvement.
-On the other hand, the key metric could be the maximum or minimum over all these values.
+Intuitively, smaller volumes and fewer measurements per detector are better, so the fact these averages decrease might suggest a general performance improvement.
+However, there is an important trade-off: while the new edge detectors catch measurement errors quickly (with volume 2), data qubit errors can accumulate for longer before being detected.
 
 \begingroup
 \renewcommand*{\arraystretch}{1.5}
@@ -344,8 +343,8 @@ we just write $h_{\mathbf{r}}$ instead of $h$ to make it clear that we're consid
 %Likewise we can again consider $(s_X, s_Z, h_{\mathbf{r}})_X$- and $(s_X, s_Z, h_{\mathbf{r}})_Z$-blocks.
 % as defined above, but with the measurement of edge operators $\dcccOp{E}{\kappa_t}{P_t}$ at timestep $t$ repeated $r_t$ times.
 Repeating measurements can increase our code's resilience against spacelike logical errors consisting only of measurement errors.
-Consider such a logical error in the unrepeated DCCC.
-For every error on the measurement of an operator $\dcccOp{e}{\kappa}{P}$ after timestep $t$ in the unrepeated DCCC,
+Consider such a logical error in the unrepeated DCCC, consisting of measurement errors on a set of edge operators $\{\dcccOp{e}{\kappa}{P}\}$ all occuring at the timestep $t$.
+For every error in this set,
 consider an error on the measurement of $\dcccOp{e}{\kappa}{P}$ at \emph{all} $r_t$ repeated timesteps $R_t + u_t$ for $u_t \in \{0, \ldots, r_t - 1\}$.
 The union of all such errors forms a spacelike logical error in the repeated DCCC.
 The key here is that each new edge detector
@@ -392,7 +391,7 @@ See \Cref{fig:timelike_logical_from_data_qubit_errors_repeated_DCCC}.
 The spacelike distance under pure Pauli noise and the timelike distance under pure measurement noise are unchanged from the unrepeated case.
 So altogether we expect the two differences from this section to mean that a repeated DCCC's teraquop footprint $f(\tilde{n}_M \tilde{n}_E)$ is decreased, but that its teraquop height $\tilde{h}$ is increased.
 In fact, though it gets hard to discuss analytically for asymmetric schedules, repeating measurements generally reduces not just the timelike distance for logical errors made entirely of data qubit errors, but the timelike distance in general.
-We show this in \Cref{fig:repeated_measurements_timelike_distances} -- the topmost subfigure shows the phenomenological noise case.
+We show this in \Cref{fig:repeated_measurements_timelike_distances} -- the topmost subfigure shows the direct parity measurement noise case.
 
 
 
@@ -473,7 +472,7 @@ In particular, noise models biased towards measurement errors will see less bene
             \hline
             & \multicolumn{3}{c|}{$X^r Y^r Z^r$} & \multicolumn{3}{c|}{$X^r Z^r$} \\
             \hline
-            & \makecell{Phenom. \\ noise} & \makecell{Meas.\\noise} & \makecell{Z noise} & \makecell{Phenom. \\ noise} & \makecell{Meas.\\noise} & \makecell{Z noise} \\
+            & \makecell{Direct parity \\ meas.} & \makecell{Meas.\\noise} & \makecell{Z noise} & \makecell{Direct parity \\ meas.} & \makecell{Meas.\\noise} & \makecell{Z noise} \\
             \hline
             $d_{s, E}$ & $n_E$ & $r n_E \to \infty$ & $n_E$ & $n_E$ & $r n_E \to \infty$ & $n_E$ \\
             \hline
@@ -594,9 +593,9 @@ This difference would seem to predict a general performance increase for repeate
 % \end{table}
 % \endgroup
 
-\subsection{Phenomenological noise results}\label{subsec:repeating_measurements_phenomenological_noise}
+\subsection{Direct parity measurement noise results}\label{subsec:repeating_measurements_direct_parity_measurement_noise}
 
-\Cref{fig:phenomenological_noise_volume_plot_pymatching,fig:phenomenological_noise_volume_plot_beliefmatching} show the teraquop volumes of the best $X^a Y^b Z^c$ and $X^a Z^b$ codes under phenomenological noise models of different biases, decoded with MWPM and belief matching respectively.
+\Cref{fig:phenomenological_noise_volume_plot_pymatching,fig:phenomenological_noise_volume_plot_beliefmatching} show the teraquop volumes of the best $X^a Y^b Z^c$ and $X^a Z^b$ codes under direct parity measurement noise models of different biases, decoded with MWPM and belief matching respectively.
 
 \begin{keypoint}
     Repeating measurements improves the teraquop volumes of both codes under both decoders when the noise is measurement-biased, but otherwise it has a negligible effect.
@@ -608,9 +607,9 @@ and under belief matching (\Cref{fig:phenomenological_noise_volume_plot_beliefma
 This chimes with the intuition that repeating measurements gives us more confidence about faulty measurements.
 At the same time it seems to contradict the intuition that repeating measurements might improve performance in general (\Cref{dif:repeating_detectors,dif:repeating_decoding_graph_degrees}), and particularly in the case of $Z$-biased noise by spending more time measuring certain operators (\Cref{dif:repeating_asymmetric_schedule}). That said, we only tested a $Z$-noise bias of up to $\eta_Z = 16$, whereas in other work orders of magnitude higher values are considered -- e.g. bias of up to $\eta_Z = 10^6$ is considered in \Ccite{Chamberland_2022}.
 
-\subsection{Circuit-level noise results}\label{subsec:repeating_measurements_circuit_level_noise}
+\subsection{Auxiliary qubit circuit noise results}\label{subsec:repeating_measurements_auxiliary_qubit_circuit_noise}
 
-\Cref{fig:pymatching_circuit_level_noise_volume_plot,fig:beliefmatching_circuit_level_noise_volume_plot} show the teraquop volumes of the best codes under the three circuit-level noise models, decoded with MWPM and belief matching respectively.
+\Cref{fig:pymatching_circuit_level_noise_volume_plot,fig:beliefmatching_circuit_level_noise_volume_plot} show the teraquop volumes of the best codes under the three auxiliary qubit circuit noise models, decoded with MWPM and belief matching respectively.
 In all three cases, there is not much to be gained from repeating measurements.
 Perhaps the only exception is that in the belief matching case under the EM3 noise model, the $X^2 Z^2$ code has a noticeably better teraquop volume than the $X^1 Z^1$ code.
 But both are outperformed by the $X^1 Y^1 Z^1$ code, which has the best teraquop footprint out of all the codes in this regime.
@@ -622,7 +621,7 @@ But both are outperformed by the $X^1 Y^1 Z^1$ code, which has the best teraquop
     \centering
     \includegraphics[width=\linewidth]{figures/repeating_measurements/X1Y1Z1_X2Y2Z2_X3Y3Z3_comparison.pdf}
     \caption{
-        Teraquop volumes of the $X^aY^bZ^c$ code for phenomenological noise with measurement bias 16,
+        Teraquop volumes of the $X^aY^bZ^c$ code for direct parity measurement noise with measurement bias 16,
         and an increasing number $a + b + c$ of repeated rounds of measurements.
         As predicted by \Cref{dif:repeated_meas_errors_hyperedges}, using belief matching rather than MWPM initially makes a huge difference to the volume, but this plateaus the more we repeat measurements.
     }
@@ -633,7 +632,7 @@ But both are outperformed by the $X^1 Y^1 Z^1$ code, which has the best teraquop
     \centering
     \includegraphics[width=\linewidth]{figures/repeating_measurements/X1Z1_X3Z3_comparison}
     \caption{
-        Comparison of $\tilde{n}_E, \tilde{n}_M, \tilde{h}_E, \tilde{h}_M,$ and teraquop volume of the $X^1Z^1$ and $X^3Z^3$ code decoded using MWPM and belief matching for unbiased, $Z$-biased, and measurement-biased phenomenological noise.
+        Comparison of $\tilde{n}_E, \tilde{n}_M, \tilde{h}_E, \tilde{h}_M,$ and teraquop volume of the $X^1Z^1$ and $X^3Z^3$ code decoded using MWPM and belief matching for unbiased, $Z$-biased, and measurement-biased direct parity measurement noise.
         Based on \Cref{dif:repeated_spacelike_logicals}, we expected that repeating measurements would reduce the teraquop width and length $\tilde{n}_E$ and $\tilde{n}_M$, especially in the case of measurement-biased noise.
         Similarly, based on \Cref{dif:repeated_timelike_logicals}, we expected that repeating measurements would increase the teraquop heights $\tilde{h}_E$ and $\tilde{h}_M$, especially in the case of $Z$-biased noise.
         Neither of these predictions are borne out by the simulation results here.
@@ -651,7 +650,7 @@ But both are outperformed by the $X^1 Y^1 Z^1$ code, which has the best teraquop
         Since standard depolarizing noise and superconducting-inspired noise differ only in the probabilites of the certain gates occuring, and not in which gates can occur, any notions of distance are identical across both models.
         So we bundle these models together into a `single-qubit measurements' noise model (middle row).
         One can see that the $X^a Z^b$ code timelike distances are unchanged across all three noise models.
-        The timelike distances of $X^a Y^b Z^c$ codes are in general reduced under single-qubit measurements noise as compared to phenomenological noise,
+        The timelike distances of $X^a Y^b Z^c$ codes are in general reduced under single-qubit measurements noise as compared to direct parity measurement noise,
         but preserved under entangling measurements noise.
         This feature doesn't seem to be significant enough to appear in the simulation results -- e.g.\ in \Cref{fig:beliefmatching_circuit_level_noise_volume_plot}, under the two single-qubit measurements noise models the $X^1 Y^1 Z^1$ code still has the best teraquop volume.
     }
