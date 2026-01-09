@@ -81,7 +81,9 @@ such that cell $(\kappa_{t+1}, P_{t+1})$ shares neither a row nor column with $(
 Later, in \Cref{sec:gauge_dcccs}, we relax this restriction and investigate DCCCs with repeated measurements -- i.e. we allow $\dcccOp{E}{\kappa_{t+1}}{P_{t+1}} = \dcccOp{E}{\kappa_t}{P_t}$.
 But until then, the two DCCCs we will focus on are
 the \textit{$X^1Y^1Z^1$ honeycomb code} from \Ccite{hastings2021dynamically} and the \textit{$X^1Z^1$ honeycomb code} from 
-\Ccite{kesselring2022anyon}.
+\Ccite{kesselring2022anyon} \footnote{The $X^1Y^1Z^1$ honeycomb code is equivalent to the Hastings-Haah code up to conjugating certain qubits by Cliffords.}. 
+
+
 These are defined by the measurement schedules
 \begin{equation}\label{eq:honeycomb_codes_measurement_schedules}
     \begin{aligned}
@@ -221,7 +223,7 @@ To generate
     \caption{
         Subfigures (a), (b) and (c) show the non-identity Pauli gates as ZX-diagrams.
         Subfigures (d) and (e) show examples of errors in a phenomenological noise model.
-        Specifically, (d) shows an $X$ error occuring before an $e_{\kappa, X}$ measurement,
+        Specifically, (d) shows an $X$ error occurring before an $e_{\kappa, X}$ measurement,
         while (e) shows a measurement error on an $e_{\kappa, X}$ measurement.
         Indeed, throughout this work, a measurement error on any $e_{\kappa, P}$ measurement will correspond in the ZX-calculus to a two-legged green $\pi$-spider on a `horizontal' wire.
     }

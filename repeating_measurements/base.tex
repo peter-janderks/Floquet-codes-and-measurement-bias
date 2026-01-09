@@ -343,7 +343,7 @@ we just write $h_{\mathbf{r}}$ instead of $h$ to make it clear that we're consid
 %Likewise we can again consider $(s_X, s_Z, h_{\mathbf{r}})_X$- and $(s_X, s_Z, h_{\mathbf{r}})_Z$-blocks.
 % as defined above, but with the measurement of edge operators $\dcccOp{E}{\kappa_t}{P_t}$ at timestep $t$ repeated $r_t$ times.
 Repeating measurements can increase our code's resilience against spacelike logical errors consisting only of measurement errors.
-Consider such a logical error in the unrepeated DCCC, consisting of measurement errors on a set of edge operators $\{\dcccOp{e}{\kappa}{P}\}$ all occuring at the timestep $t$.
+Consider such a logical error in the unrepeated DCCC, consisting of measurement errors on a set of edge operators $\{\dcccOp{e}{\kappa}{P}\}$ all occurring at the timestep $t$.
 For every error in this set,
 consider an error on the measurement of $\dcccOp{e}{\kappa}{P}$ at \emph{all} $r_t$ repeated timesteps $R_t + u_t$ for $u_t \in \{0, \ldots, r_t - 1\}$.
 The union of all such errors forms a spacelike logical error in the repeated DCCC.
@@ -458,7 +458,7 @@ In particular, noise models biased towards measurement errors will see less bene
         \textbf{(e, f)} The $M$ detectors the error sits on but does not violate, drawn as Pauli webs.
         Compare this figure with \Cref{fig:XYZ_measurement_error}, where an analogous error in the $X^1 Y^1 Z^1$ code corresponded to a hyperedge in the decoding graph.
         This would still have been the case in the $X^2 Y^2 Z^2$ code had the measurement error occurred in the last of the $r=2$ repeated rounds of measurements.
-        But for all other rounds such an error now corresponds to an ordinary egde.
+        But for all other rounds such an error now corresponds to an ordinary edge.
         In general, repeating measurements reduces the number of measurement errors corresponding to hyperedges, which would suggest a plateau in the improvement from using belief matching over MWPM (\Cref{dif:repeated_meas_errors_hyperedges}), and indeed this seems to be the case numerically (\Cref{fig:XaYbZc_teraquop_volumes_measurement_bias}).
     }
     \label{fig:repeated_DCCC_ordinary_edge_measurement_error}
@@ -647,7 +647,7 @@ But both are outperformed by the $X^1 Y^1 Z^1$ code, which has the best teraquop
     \includegraphics[width=0.9\linewidth]{figures/repeating_measurements/timelike_distance.pdf}
     \caption{
         Plots showing the timelike distances of $(n_E, n_M, h)$-blocks of $X^a Y^b Z^c$ and $X^a Z^b$ codes under different noise models as a fraction of the block height $h$.
-        Since standard depolarizing noise and superconducting-inspired noise differ only in the probabilites of the certain gates occuring, and not in which gates can occur, any notions of distance are identical across both models.
+        Since standard depolarizing noise and superconducting-inspired noise differ only in the probabilites of the certain gates occurring, and not in which gates can occur, any notions of distance are identical across both models.
         So we bundle these models together into a `single-qubit measurements' noise model (middle row).
         One can see that the $X^a Z^b$ code timelike distances are unchanged across all three noise models.
         The timelike distances of $X^a Y^b Z^c$ codes are in general reduced under single-qubit measurements noise as compared to direct parity measurement noise,
