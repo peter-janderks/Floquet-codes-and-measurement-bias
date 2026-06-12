@@ -1,7 +1,8 @@
 .idea/*
 out/*
 svg-inkscape/*
-.DS_Storemain.aux
+.DS_Store
+main.aux
 main.bbl
 main.blg
 main.fdb_latexmk
