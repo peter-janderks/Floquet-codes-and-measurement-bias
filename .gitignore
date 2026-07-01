@@ -2,3 +2,13 @@
 out/*
 svg-inkscape/*
 .DS_Store
+main.aux
+main.bbl
+main.blg
+main.fdb_latexmk
+main.fls
+main.log
+main.out
+main.pdf
+main.pdfsync
+main.toc
